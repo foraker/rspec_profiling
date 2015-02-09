@@ -15,3 +15,5 @@ module RspecProfiling
     end
   end
 end
+
+RSpecProfiling = RspecProfiling

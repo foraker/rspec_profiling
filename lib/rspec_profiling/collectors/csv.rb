@@ -1,3 +1,5 @@
+require "csv"
+
 module RspecProfiling
   module Collectors
     class CSV
@@ -5,9 +7,9 @@ module RspecProfiling
         commit_sha
         commit_date
         file
-        number
+        line_number
         description
-        result
+        status
         time
         query_count
         query_time
@@ -29,18 +31,18 @@ module RspecProfiling
 
       def insert(attributes)
         output << HEADERS.map do |field|
-          attributes.fetch(field)
+          attributes.fetch(field.to_sym)
         end
       end
 
       private
 
       def output
-        @output ||= CSV.open(path, "w").tap { |csv| csv << HEADERS }
+        @output ||= ::CSV.open(path, "w").tap { |csv| csv << HEADERS }
       end
 
       def path
-        RspecProfiling.config.csv_path
+        RspecProfiling.config.csv_path.call
       end
     end
   end

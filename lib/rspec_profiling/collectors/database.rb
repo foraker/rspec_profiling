@@ -82,7 +82,17 @@ module RspecProfiling
         RspecProfiling.config.db_path
       end
 
-      class Result < ActiveRecord::Base; end
+      class Result < ActiveRecord::Base
+        def to_s
+          [description, location].join(" - ")
+        end
+
+        private
+
+        def location
+          [file, line_number].join(":")
+        end
+      end
     end
   end
 end

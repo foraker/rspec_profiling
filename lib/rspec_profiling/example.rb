@@ -76,7 +76,11 @@ module RspecProfiling
     attr_reader :example, :counts
 
     def execution_result
-      example.execution_result
+      @execution_result ||= begin
+        result = example.execution_result
+        result = OpenStruct.new(result) if result.is_a?(Hash)
+        result
+      end
     end
 
     def metadata

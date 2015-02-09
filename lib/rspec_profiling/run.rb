@@ -12,8 +12,9 @@ module RspecProfiling
       start_counting_requests
     end
 
-    def example_started(notification)
-      @current_example = Example.new(notification.example)
+    def example_started(example)
+      example = example.example if example.respond_to?(:example)
+      @current_example = Example.new(example)
     end
 
     def example_finished(*args)

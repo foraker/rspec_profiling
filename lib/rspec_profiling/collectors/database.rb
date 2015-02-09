@@ -24,17 +24,18 @@ module RspecProfiling
         return if prepared?
 
         connection.create_table(table) do |t|
-          t.string   :commit_sha
-          t.datetime :commit_date
-          t.text     :file
-          t.integer  :line_number
-          t.text     :description
-          t.decimal  :time
-          t.string   :status
-          t.integer  :query_count
-          t.decimal  :query_time
-          t.integer  :request_count
-          t.decimal  :request_time
+          t.string    :commit_sha
+          t.datetime  :commit_date
+          t.text      :file
+          t.integer   :line_number
+          t.text      :description
+          t.decimal   :time
+          t.string    :status
+          t.integer   :query_count
+          t.decimal   :query_time
+          t.integer   :request_count
+          t.decimal   :request_time
+          t.timestamps
         end
       end
 
@@ -43,12 +44,15 @@ module RspecProfiling
       end
 
       def insert(attributes)
-        results.create!(attributes)
+        results.create!(attributes.except(:created_at))
       end
 
       def results
         @results ||= begin
+          establish_connection
+
           Result.table_name = table
+          Result.attr_protected if Result.respond_to?(:attr_protected)
           Result
         end
       end

@@ -8,7 +8,7 @@ module RspecProfiling
       collector:  RspecProfiling::Collectors::Database,
       db_path:    'tmp/rspec_profiling',
       table_name: 'spec_profiling_results',
-      csv_path:   'tmp/spec_benchmarks.csv'
+      csv_path:   Proc.new { 'tmp/spec_benchmarks.csv' }
     })
   end
 end

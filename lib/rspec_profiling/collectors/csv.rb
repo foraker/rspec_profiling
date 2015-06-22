@@ -4,8 +4,8 @@ module RspecProfiling
   module Collectors
     class CSV
       HEADERS = %w{
-        commit_sha
-        commit_date
+        commit
+        date
         file
         line_number
         description

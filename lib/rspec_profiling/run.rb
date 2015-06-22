@@ -19,8 +19,8 @@ module RspecProfiling
 
     def example_finished(*args)
       collector.insert({
-        commit_sha:    CurrentCommit.sha,
-        commit_date:   CurrentCommit.time,
+        commit:        CurrentCommit.sha,
+        date:          CurrentCommit.time,
         file:          @current_example.file,
         line_number:   @current_example.line_number,
         description:   @current_example.description,

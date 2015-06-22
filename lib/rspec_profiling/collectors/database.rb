@@ -24,8 +24,8 @@ module RspecProfiling
         return if prepared?
 
         connection.create_table(table) do |t|
-          t.string    :commit_sha
-          t.datetime  :commit_date
+          t.string    :commit
+          t.datetime  :date
           t.text      :file
           t.integer   :line_number
           t.text      :description

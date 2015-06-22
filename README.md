@@ -5,7 +5,7 @@ with interesting attributes. For example, find the slowest specs, or the
 spec which issues the most queries.
 
 Collected attributes include:
-- git commit SHA and date
+- git commit SHA (or SVN revision) and date
 - example file, line number and description
 - example status (i.e. passed or failed)
 - example time

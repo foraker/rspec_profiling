@@ -13,8 +13,8 @@ module RspecProfiling
 
         before do
           collector.insert({
-            commit_sha: "ABC123",
-            commit_date: "Thu Dec 18 12:00:00 2012",
+            commit: "ABC123",
+            date: "Thu Dec 18 12:00:00 2012",
             file: "/some/file.rb",
             line_number: 10,
             description: "Some spec",
@@ -32,7 +32,7 @@ module RspecProfiling
         end
 
         it "records the commit SHA" do
-          expect(result.commit_sha).to eq "ABC123"
+          expect(result.commit).to eq "ABC123"
         end
 
         it "records the commit date" do

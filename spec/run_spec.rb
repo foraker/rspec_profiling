@@ -23,7 +23,7 @@ module RspecProfiling
       let(:result)    { collector.results.first }
       let(:commit) do
         double({
-          sha: "abc123",
+          commit: "abc123",
           time: Time.new(2012, 12, 12)
         })
       end

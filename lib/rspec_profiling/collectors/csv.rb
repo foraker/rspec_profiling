@@ -10,6 +10,7 @@ module RspecProfiling
         line_number
         description
         status
+        exception
         time
         query_count
         query_time

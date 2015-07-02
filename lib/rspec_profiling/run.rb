@@ -25,6 +25,7 @@ module RspecProfiling
         line_number:   @current_example.line_number,
         description:   @current_example.description,
         status:        @current_example.status,
+        exception:     @current_example.exception,
         time:          @current_example.time,
         query_count:   @current_example.query_count,
         query_time:    @current_example.query_time,

@@ -38,6 +38,10 @@ module RspecProfiling
     def status
       execution_result.status
     end
+    
+    def exception
+      execution_result.exception
+    end
 
     def time
       execution_result.run_time

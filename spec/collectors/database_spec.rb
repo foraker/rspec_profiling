@@ -20,6 +20,7 @@ module RspecProfiling
             description: "Some spec",
             time: 100,
             status: :passed,
+            exception: "some issue",
             query_count: 10,
             query_time: 50,
             request_count: 1,
@@ -57,6 +58,10 @@ module RspecProfiling
 
         it "records the passing status" do
           expect(result.status).to eq 'passed'
+        end
+
+        it "records the exception" do
+          expect(result.exception). to eq 'some issue'
         end
 
         it "records the query count" do

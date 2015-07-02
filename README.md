@@ -8,6 +8,7 @@ Collected attributes include:
 - git commit SHA (or SVN revision) and date
 - example file, line number and description
 - example status (i.e. passed or failed)
+- example exception (i.e. nil if passed, reason for failure otherwise)
 - example time
 - query count and time
 - request count and time

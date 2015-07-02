@@ -31,6 +31,7 @@ module RspecProfiling
           t.text      :description
           t.decimal   :time
           t.string    :status
+          t.text      :exception
           t.integer   :query_count
           t.decimal   :query_time
           t.integer   :request_count

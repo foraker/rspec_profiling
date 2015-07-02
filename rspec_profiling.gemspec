@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["bae@foraker.com"]
   spec.description   = %q{Profile RSpec test suites}
   spec.summary       = %q{Profile RSpec test suites}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/foraker/rspec_profiling"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

@@ -2,16 +2,16 @@ require 'rake'
 
 namespace :rspec_profiling do
   desc "Install the collector"
-  task :install do
+  task install: :environment do
     collector.install
   end
 
   desc "Uninstall the collector"
-  task :uninstall do
+  task uninstall: :environment do
     collector.uninstall
   end
 
-  task :console do
+  task console: :environment do
     require 'irb'
     require 'irb/completion'
     require 'rspec_profiling'

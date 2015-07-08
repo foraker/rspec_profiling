@@ -56,14 +56,12 @@ By default, RspecProfiling expects Git as the version control system.
 
 #### Subversion
 
-RspecProfiling can be configured to use `svn` in your `spec_helper.rb`:
+RspecProfiling can be configured to use `svn` in `config/initializers/rspec_profiling.rb`:
 
 ```Ruby
 RSpecProfiling.configure do |config|
   config.vcs = RSpecProfiling::VCS::Svn
 end
-
-require "rspec_profiling/rspec"
 ```
 
 #### Git / Subversion
@@ -74,8 +72,6 @@ For those with a mixed project, with some developers using `git svn` and others 
 RSpecProfiling.configure do |config|
   config.vcs = RSpecProfiling::VCS::GitSvn
 end
-
-require "rspec_profiling/rspec"
 ```
 
 ### Choose a results collector
@@ -108,15 +104,12 @@ results.count
 
 #### CSV
 
-You can configure `RSpecProfiling` to collect results in a CSV in your
-`spec_helper.rb` file.
+You can configure `RSpecProfiling` to collect results in a CSV in `config/initializers/rspec_profiling.rb`:
 
 ```Ruby
 RSpecProfiling.configure do |config|
   config.collector = RSpecProfiling::Collectors::CSV
 end
-
-require "rspec_profiling/rspec"
 ```
 
 By default, the CSV is output to `cat tmp/spec_benchmarks.csv`.
@@ -128,8 +121,6 @@ RSpecProfiling.configure do |config|
   config.collector = RSpecProfiling::Collectors::CSV
   config.csv_path = ->{ "tmp/spec_benchmark_#{Time.now.to_i}" }
 end
-
-require "rspec_profiling/rspec"
 ```
 
 ## Configuration Options
@@ -147,11 +138,11 @@ end
 - `db_path` - the location of the SQLite database file
 - `table_name` - the database table name in which results are stored
 - `csv_path` - the directory in which CSV files are dumped
+- `collector` - collector to use
 
 ## Uninstalling
 
-To remove the results database, run `bundle exec rake
-rspec_profiling:uninstall`.
+To remove the results database, run `bundle exec rake rspec_profiling:uninstall`.
 
 ## Contributing
 

@@ -37,7 +37,7 @@ module RspecProfiling
         end
 
         it "records the commit date" do
-          expect(result.commit_date).to eq Time.utc(2012, 12, 18, 12)
+          expect(result.date).to eq Time.utc(2012, 12, 18, 12)
         end
 
         it "records the file" do

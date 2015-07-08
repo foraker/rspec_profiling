@@ -1,11 +1,11 @@
 require "rspec_profiling/config"
-require "rspec_profiling/collectors/database"
+require "rspec_profiling/collectors/sql"
 
 module RspecProfiling
   module Collectors
-    describe Database do
-      before(:all) { Database.install }
-      after(:all)  { Database.uninstall }
+    describe SQL do
+      before(:all) { described_class.install }
+      after(:all)  { described_class.uninstall }
 
       describe "#insert" do
         let(:collector) { described_class.new }

@@ -123,6 +123,18 @@ RSpecProfiling.configure do |config|
 end
 ```
 
+#### Postgresql
+
+You can configure `RSpecProfiling` to collect results in a Postgres database 
+in your `spec_helper.rb` file.
+
+```Ruby
+RSpecProfiling.configure do |config|
+  config.collector = RspecProfiling::Collectors::PSQL
+  config.db_path   = 'profiling'
+end
+```
+
 ## Configuration Options
 
 Configuration is performed like this:

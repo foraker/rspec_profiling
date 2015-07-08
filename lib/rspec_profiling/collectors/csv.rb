@@ -30,6 +30,10 @@ module RspecProfiling
         # no op
       end
 
+      def initialize
+        RspecProfiling.config.csv_path ||= 'tmp/spec_benchmarks.csv'
+      end
+
       def insert(attributes)
         output << HEADERS.map do |field|
           attributes.fetch(field.to_sym)

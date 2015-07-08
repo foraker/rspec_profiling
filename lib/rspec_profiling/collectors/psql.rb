@@ -1,9 +1,9 @@
-require "sqlite3"
+require "pg"
 require "active_record"
 
 module RspecProfiling
   module Collectors
-    class Database
+    class PSQL
       def self.install
         new.install
       end
@@ -17,6 +17,7 @@ module RspecProfiling
       end
 
       def initialize
+        RspecProfiling.config.db_path ||= 'rspec_profiling'
         establish_connection
       end
 
@@ -69,8 +70,14 @@ module RspecProfiling
       end
 
       def establish_connection
+        begin
+          PG.connect(dbname: 'postgres').exec("CREATE DATABASE #{database}")
+        rescue PG::DuplicateDatabase
+          # no op
+        end
+
         Result.establish_connection(
-          :adapter  => "sqlite3",
+          :adapter  => 'postgresql',
           :database => database
         )
       end

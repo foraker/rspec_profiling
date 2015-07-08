@@ -46,6 +46,38 @@ bundle exec rake rspec_profiling:install
 
 ## Usage
 
+### Choose a version control system
+
+Results are collected based on the version control system employed e.g. revision or commit SHA for `svn` and `git` respectively.
+
+#### Git
+
+By default, RspecProfiling expects Git as the version control system.
+
+#### Subversion
+
+RspecProfiling can be configured to use `svn` in your `spec_helper.rb`:
+
+```Ruby
+RSpecProfiling.configure do |config|
+  config.vcs = RSpecProfiling::VCS::Svn
+end
+
+require "rspec_profiling/rspec"
+```
+
+#### Git / Subversion
+
+For those with a mixed project, with some developers using `git svn` and others regular `svn`, use this configuration to detect which is being used locally and behave accordingly.
+
+```Ruby
+RSpecProfiling.configure do |config|
+  config.vcs = RSpecProfiling::VCS::GitSvn
+end
+
+require "rspec_profiling/rspec"
+```
+
 ### Choose a results collector
 
 Results are collected just by running the specs.
@@ -98,6 +130,18 @@ RSpecProfiling.configure do |config|
 end
 
 require "rspec_profiling/rspec"
+```
+
+#### Postgresql
+
+You can configure `RSpecProfiling` to collect results in a Postgres database 
+in your `spec_helper.rb` file.
+
+```Ruby
+RSpecProfiling.configure do |config|
+  config.collector = RspecProfiling::Collectors::PSQL
+  config.db_path   = 'profiling'
+end
 ```
 
 ## Configuration Options

@@ -1,10 +1,17 @@
 require "rspec_profiling/example"
-require "rspec_profiling/current_commit"
+require "rspec_profiling/vcs/git"
+require "rspec_profiling/vcs/svn"
+require "rspec_profiling/vcs/git_svn"
+require "rspec_profiling/collectors/database"
+require "rspec_profiling/collectors/csv"
 
 module RspecProfiling
   class Run
-    def initialize(collector)
+    def initialize(collector = RspecProfiling.config.collector.new,
+                   vcs = RspecProfiling.config.vcs.new)
+
       @collector = collector
+      @vcs       = vcs
     end
 
     def start(*args)
@@ -19,8 +26,8 @@ module RspecProfiling
 
     def example_finished(*args)
       collector.insert({
-        commit:        CurrentCommit.sha,
-        date:          CurrentCommit.time,
+        commit:        vcs.sha,
+        date:          vcs.time,
         file:          @current_example.file,
         line_number:   @current_example.line_number,
         description:   @current_example.description,
@@ -39,7 +46,7 @@ module RspecProfiling
 
     private
 
-    attr_reader :collector
+    attr_reader :collector, :vcs
 
     def start_counting_queries
       ActiveSupport::Notifications.subscribe("sql.active_record") do |name, start, finish, id, query|

@@ -36,7 +36,7 @@ module RspecProfiling
           t.decimal   :query_time
           t.integer   :request_count
           t.decimal   :request_time
-          t.timestamps
+          t.timestamps null: true
         end
       end
 

@@ -1,4 +1,4 @@
-# RSpecProfiling
+# RspecProfiling
 
 Collects profiles of RSpec test suites, enabling you to identify specs
 with interesting attributes. For example, find the slowest specs, or the
@@ -15,7 +15,7 @@ Collected attributes include:
 
 ## Compatibility
 
-RSpecProfiling should work with Rails >= 3.2 and RSpec >= 2.14.
+RspecProfiling should work with Rails >= 3.2 and RSpec >= 2.14.
 
 ## Installation
 
@@ -59,8 +59,8 @@ By default, RspecProfiling expects Git as the version control system.
 RspecProfiling can be configured to use `svn` in `config/initializers/rspec_profiling.rb`:
 
 ```Ruby
-RSpecProfiling.configure do |config|
-  config.vcs = RSpecProfiling::VCS::Svn
+RspecProfiling.configure do |config|
+  config.vcs = RspecProfiling::VCS::Svn
 end
 ```
 
@@ -69,8 +69,8 @@ end
 For those with a mixed project, with some developers using `git svn` and others regular `svn`, use this configuration to detect which is being used locally and behave accordingly.
 
 ```Ruby
-RSpecProfiling.configure do |config|
-  config.vcs = RSpecProfiling::VCS::GitSvn
+RspecProfiling.configure do |config|
+  config.vcs = RspecProfiling::VCS::GitSvn
 end
 ```
 
@@ -83,7 +83,7 @@ Results are collected just by running the specs.
 By default, profiles are collected in an SQL database. Make sure you've
 run the installation rake task before attempting.
 
-You can review results by running the RSpecProfiling console.
+You can review results by running the RspecProfiling console.
 
 ```
 bundle exec rake rspec_profiling:console
@@ -104,11 +104,11 @@ results.count
 
 #### CSV
 
-You can configure `RSpecProfiling` to collect results in a CSV in `config/initializers/rspec_profiling.rb`:
+You can configure `RspecProfiling` to collect results in a CSV in `config/initializers/rspec_profiling.rb`:
 
 ```Ruby
-RSpecProfiling.configure do |config|
-  config.collector = RSpecProfiling::Collectors::CSV
+RspecProfiling.configure do |config|
+  config.collector = RspecProfiling::Collectors::CSV
 end
 ```
 
@@ -117,19 +117,19 @@ Rerunning spec will overwrite the file. You can customize the CSV path
 to, for example, include the sample time.
 
 ```Ruby
-RSpecProfiling.configure do |config|
-  config.collector = RSpecProfiling::Collectors::CSV
+RspecProfiling.configure do |config|
+  config.collector = RspecProfiling::Collectors::CSV
   config.csv_path = ->{ "tmp/spec_benchmark_#{Time.now.to_i}" }
 end
 ```
 
 #### Postgresql
 
-You can configure `RSpecProfiling` to collect results in a Postgres database 
+You can configure `RspecProfiling` to collect results in a Postgres database
 in your `spec_helper.rb` file.
 
 ```Ruby
-RSpecProfiling.configure do |config|
+RspecProfiling.configure do |config|
   config.collector = RspecProfiling::Collectors::PSQL
   config.db_path   = 'profiling'
 end
@@ -140,7 +140,7 @@ end
 Configuration is performed like this:
 
 ```Ruby
-RSpecProfiling.configure do |config|
+RspecProfiling.configure do |config|
   config.<option> = <something>
 end
 ```

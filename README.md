@@ -166,8 +166,8 @@ To remove the results database, run `bundle exec rake rspec_profiling:uninstall`
 
 ## About Foraker Labs
 
-<img src="http://assets.foraker.com/foraker_logo.png" width="400" height="62">
+![Foraker Logo](http://assets.foraker.com/attribution_logo.png)
+
+Foraker Labs builds exciting web and mobile apps in Boulder, CO. Our work powers a wide variety of businesses with many different needs. We love open source software, and we're proud to contribute where we can. Interested to learn more? [Contact us today](https://www.foraker.com/contact-us).
 
 This project is maintained by Foraker Labs. The names and logos of Foraker Labs are fully owned and copyright Foraker Design, LLC.
-
-Foraker Labs is a Boulder-based Ruby on Rails and iOS development shop. Please reach out if we can [help build your product](http://www.foraker.com).

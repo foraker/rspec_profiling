@@ -84,23 +84,31 @@ By default, profiles are collected in an SQL database. Make sure you've
 run the installation rake task before attempting.
 
 You can review results by running the RspecProfiling console.
+The console has a preloaded `results` variable.
 
 ```
 bundle exec rake rspec_profiling:console
 
 > results.count
 => 1970
+```
 
+You can find the spec that runs the most queries:
+
+```
 > results.order(:query_count).last.to_s
 => "Updating my account - ./spec/features/account_spec.rb:15"
 ```
 
-The console has a preloaded `results` variable.
+Or find the spec that takes the most time:
 
 ```
-results.count
-> 180
+> results.order(:time).last.to_s
+=> "Updating my account - ./spec/features/account_spec.rb:15"
 ```
+
+There are additional attributes available on the `Result` instances to enable
+debugging, such as `exception` and `status`.
 
 #### CSV
 

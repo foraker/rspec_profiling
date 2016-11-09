@@ -160,6 +160,17 @@ end
 - `csv_path` - the directory in which CSV files are dumped
 - `collector` - collector to use
 
+### Usage in a script
+
+If you want to access the results from a Ruby script instead of the `rake rspec_profiling:console` shell command:
+
+```ruby
+require 'rspec_profiling'
+require 'rspec_profiling/console'
+```
+
+Then `results` will be available as a variable to the script. 
+
 ## Uninstalling
 
 To remove the results database, run `bundle exec rake rspec_profiling:uninstall`.

@@ -19,14 +19,9 @@ module RspecProfiling
 
     describe "#run_example" do
       let(:collector) { CollectorDouble.new }
-      let(:run)       { described_class.new(collector) }
+      let(:vcs) { VcsDouble.new }
+      let(:run)       { described_class.new(collector, vcs) }
       let(:result)    { collector.results.first }
-      let(:commit) do
-        double({
-          commit: "abc123",
-          time: Time.new(2012, 12, 12)
-        })
-      end
       let(:example) do
         ExampleDouble.new({
           file_path: "/something_spec.rb",
@@ -45,13 +40,20 @@ module RspecProfiling
       end
 
       before do
-        stub_const("RspecProfiling::CurrentCommit", commit)
         stub_const("ActiveSupport::Notifications", Notifications.new)
         simulate_test_suite_run
       end
 
       it "collects a single example" do
         expect(collector.count).to eq 1
+      end
+
+      it "records the branch name" do
+        expect(result.branch).to eq "master"
+      end
+
+      it "records the commit SHA" do
+        expect(result.commit).to eq "abc123"
       end
 
       it "counts two queries" do
@@ -100,6 +102,20 @@ module RspecProfiling
 
       def count
         results.count
+      end
+    end
+
+    class VcsDouble
+      def branch
+        "master"
+      end
+
+      def sha
+        "abc123"
+      end
+
+      def time
+        0.1
       end
     end
 

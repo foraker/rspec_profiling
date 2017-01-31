@@ -3,6 +3,10 @@ require 'time'
 module RspecProfiling
   module VCS
     class Svn
+      def branch
+        nil
+      end
+
       def sha
         `svn info -r 'HEAD' | grep "Revision" | cut -f2 -d' '`
       end

@@ -25,6 +25,7 @@ module RspecProfiling
         return if prepared?
 
         connection.create_table(table) do |t|
+          t.string    :branch
           t.string    :commit
           t.datetime  :date
           t.text      :file

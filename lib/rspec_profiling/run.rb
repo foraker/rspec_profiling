@@ -27,6 +27,7 @@ module RspecProfiling
 
     def example_finished(*args)
       collector.insert({
+        branch:        vcs.branch,
         commit:        vcs.sha,
         date:          vcs.time,
         file:          @current_example.file,

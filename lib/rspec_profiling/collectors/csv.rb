@@ -4,6 +4,7 @@ module RspecProfiling
   module Collectors
     class CSV
       HEADERS = %w{
+        branch
         commit
         date
         file

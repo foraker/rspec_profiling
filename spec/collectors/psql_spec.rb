@@ -13,6 +13,7 @@ module RspecProfiling
 
         before do
           collector.insert({
+            branch: "master",
             commit: "ABC123",
             date: "Thu Dec 18 12:00:00 2012",
             file: "/some/file.rb",
@@ -30,6 +31,10 @@ module RspecProfiling
 
         it "records a single result" do
           expect(collector.results.count).to eq 1
+        end
+
+        it "records the branch name" do
+          expect(result.branch).to eq "master"
         end
 
         it "records the commit SHA" do

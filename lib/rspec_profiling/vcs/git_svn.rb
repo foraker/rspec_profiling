@@ -9,6 +9,10 @@ module RspecProfiling
         RspecProfiling::VCS::Svn unless $CHILD_STATUS.success?
       end
 
+      def branch
+        nil
+      end
+
       def sha
         if version_control.nil?
           `git svn info | grep "Revision" | cut -f2 -d' '`

@@ -26,7 +26,7 @@ module RspecProfiling
 
         connection.create_table(table) do |t|
           t.string    :branch
-          t.string    :commit
+          t.string    :commit_hash
           t.datetime  :date
           t.text      :file
           t.integer   :line_number

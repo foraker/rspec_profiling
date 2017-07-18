@@ -52,8 +52,8 @@ module RspecProfiling
         expect(result.branch).to eq "master"
       end
 
-      it "records the commit SHA" do
-        expect(result.commit).to eq "abc123"
+      it "records the commit_hash SHA" do
+        expect(result.commit_hash).to eq "abc123"
       end
 
       it "counts two queries" do

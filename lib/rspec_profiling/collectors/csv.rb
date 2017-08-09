@@ -5,7 +5,7 @@ module RspecProfiling
     class CSV
       HEADERS = %w{
         branch
-        commit
+        commit_hash
         date
         file
         line_number

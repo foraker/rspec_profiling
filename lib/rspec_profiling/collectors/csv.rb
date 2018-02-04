@@ -32,13 +32,28 @@ module RspecProfiling
       end
 
       def initialize
-        RspecProfiling.config.csv_path ||= 'tmp/spec_benchmarks.csv'
+        RspecProfiling.config.csv_path ||= ->{ "tmp/spec_benchmark.csv" }
       end
 
       def insert(attributes)
         output << HEADERS.map do |field|
           attributes.fetch(field.to_sym)
         end
+      end
+
+      def results
+        @results ||= begin
+                       data = ::CSV.read(path)
+                       header = data.shift
+                       data.map do |row|
+                         row_in_hash = Hash[[header, row].transpose]
+                         OpenStruct.new(row_in_hash)
+                       end
+                     end
+      end
+
+      def stop
+        output.close
       end
 
       private

@@ -1,7 +1,7 @@
 require "rspec_profiling"
 
 RSpec.configure do |config|
-  runner = RspecProfiling::Run.new(RspecProfiling.config.collector.new, 
+  runner = RspecProfiling::Run.new(RspecProfiling.config.collector.new,
                                    RspecProfiling.config.vcs.new)
 
   config.reporter.register_listener(
@@ -9,6 +9,7 @@ RSpec.configure do |config|
     :start,
     :example_started,
     :example_passed,
-    :example_failed
+    :example_failed,
+    :stop
   )
 end

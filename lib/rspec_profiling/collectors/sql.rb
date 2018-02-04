@@ -60,6 +60,9 @@ module RspecProfiling
         end
       end
 
+      def stop
+      end
+
       private
 
       def prepared?

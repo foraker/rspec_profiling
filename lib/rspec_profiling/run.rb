@@ -46,7 +46,7 @@ module RspecProfiling
     alias :example_passed :example_finished
     alias :example_failed :example_finished
 
-    def stop
+    def stop(*)
       collector.stop
     end
 

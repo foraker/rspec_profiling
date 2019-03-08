@@ -63,7 +63,15 @@ module RspecProfiling
       private
 
       def prepared?
-        connection.table_exists?(table)
+        if active_record5_or_up?
+          connection.data_source_exists?(table)
+        else
+          connection.table_exists?(table)
+        end
+      end
+
+      def active_record5_or_up?
+        ActiveRecord::VERSION::STRING[0].to_i >= 5
       end
 
       def connection

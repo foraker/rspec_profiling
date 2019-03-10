@@ -4,11 +4,11 @@ module RspecProfiling
   module VCS
     class Git
       def branch
-        `git rev-parse --abbrev-ref HEAD`
+        `git rev-parse --abbrev-ref HEAD`.chomp
       end
 
       def sha
-        `git rev-parse HEAD`
+        `git rev-parse HEAD`.chomp
       end
 
       def time

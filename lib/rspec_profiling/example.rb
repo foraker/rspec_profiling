@@ -21,6 +21,8 @@ module RspecProfiling
     def initialize(example)
       @example = example
       @counts  = Hash.new(0)
+      @event_counts = Hash.new(0)
+      @event_times = Hash.new(0)
     end
 
     def file
@@ -38,7 +40,7 @@ module RspecProfiling
     def status
       execution_result.status
     end
-    
+
     def exception
       execution_result.exception
     end
@@ -63,6 +65,8 @@ module RspecProfiling
       counts[:request_time]
     end
 
+    attr_reader :event_counts, :event_times
+
     def log_query(query, start, finish)
       unless query[:sql] =~ IGNORED_QUERIES_PATTERN
         counts[:query_count] += 1
@@ -73,6 +77,11 @@ module RspecProfiling
     def log_request(request, start, finish)
       counts[:request_count] += 1
       counts[:request_time] += request[:view_runtime].to_f
+    end
+
+    def log_event(name, start, finish)
+      event_counts[name] += 1
+      event_times[name] += (finish - start)
     end
 
     private

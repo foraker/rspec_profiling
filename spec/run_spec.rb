@@ -17,10 +17,14 @@ module RspecProfiling
       })
     end
 
+    def simulate_event(name)
+      ActiveSupport::Notifications.instrument(name, name, 100, 150, 3, {})
+    end
+
     describe "#run_example" do
       let(:collector) { CollectorDouble.new }
-      let(:vcs) { VcsDouble.new }
-      let(:run)       { described_class.new(collector, vcs) }
+      let(:vcs)       { VcsDouble.new }
+      let(:run)       { described_class.new(collector, vcs, ["custom"]) }
       let(:result)    { collector.results.first }
       let(:example) do
         ExampleDouble.new({
@@ -36,6 +40,8 @@ module RspecProfiling
         simulate_query "SELECT * FROM users LIMIT 1;"
         simulate_query "SELECT * FROM comments WHERE user_id = 1;"
         simulate_request
+        simulate_event "custom"
+        simulate_event "untracked"
         run.example_passed
       end
 
@@ -64,6 +70,10 @@ module RspecProfiling
         expect(result.request_count).to eq 1
       end
 
+      it "counts one custom event" do
+        expect(result.event_counts["custom"]).to eq 1
+      end
+
       it "records the file" do
         expect(result.file).to eq "/something_spec.rb"
       end
@@ -86,6 +96,10 @@ module RspecProfiling
 
       it "records the request time" do
         expect(result.request_time).to eq 10
+      end
+
+      it "records the custom event time" do
+        expect(result.event_times["custom"]).to eq 50
       end
     end
 

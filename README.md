@@ -74,6 +74,16 @@ RspecProfiling.configure do |config|
 end
 ```
 
+#### Custom Event Subscriptions
+
+```Ruby
+RspecProfiling.configure do |config|
+  config.events = %w[event1 event2]
+end
+```
+
+Note that custom events are only currenly reported by the CSV collector.
+
 ### Choose a results collector
 
 Results are collected just by running the specs.
@@ -169,7 +179,7 @@ require 'rspec_profiling'
 require 'rspec_profiling/console'
 ```
 
-Then `results` will be available as a variable to the script. 
+Then `results` will be available as a variable to the script.
 
 ## Uninstalling
 

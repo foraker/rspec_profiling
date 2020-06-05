@@ -31,24 +31,44 @@ module RspecProfiling
         # no op
       end
 
-      def initialize
-        RspecProfiling.config.csv_path ||= 'tmp/spec_benchmarks.csv'
+      def initialize(config=RspecProfiling.config)
+        config.csv_path ||= 'tmp/spec_benchmarks.csv'
+
+        @config = config
       end
 
       def insert(attributes)
-        output << HEADERS.map do |field|
-          attributes.fetch(field.to_sym)
-        end
+        output << static_cells(attributes) + event_cells(attributes)
       end
 
       private
 
+      attr_reader :config
+
       def output
-        @output ||= ::CSV.open(path, "w").tap { |csv| csv << HEADERS }
+        @output ||= ::CSV.open(path, "w").tap { |csv| csv << HEADERS + event_headers }
       end
 
       def path
-        RspecProfiling.config.csv_path.call
+        config.csv_path.call
+      end
+
+      def static_cells(attributes)
+        HEADERS.map do |field|
+          attributes.fetch(field.to_sym)
+        end
+      end
+
+      def event_headers
+        config.events.flat_map do |event|
+          ["#{event}_count", "#{event}_time"]
+        end
+      end
+
+      def event_cells(attributes)
+        config.events.flat_map do |event|
+          [attributes[:event_counts][event], attributes[:event_times][event]]
+        end
       end
     end
   end

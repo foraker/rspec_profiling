@@ -9,15 +9,18 @@ require "rspec_profiling/collectors/csv"
 module RspecProfiling
   class Run
     def initialize(collector = RspecProfiling.config.collector.new,
-                   vcs = RspecProfiling.config.vcs.new)
+                   vcs = RspecProfiling.config.vcs.new,
+                   events = RspecProfiling.config.events)
 
       @collector = collector
       @vcs       = vcs
+      @events    = events
     end
 
     def start(*args)
       start_counting_queries
       start_counting_requests
+      start_counting_events
     end
 
     def example_started(example)
@@ -39,7 +42,10 @@ module RspecProfiling
         query_count:   @current_example.query_count,
         query_time:    @current_example.query_time,
         request_count: @current_example.request_count,
-        request_time:  @current_example.request_time
+        request_time:  @current_example.request_time,
+        events:        @events,
+        event_counts:  @current_example.event_counts,
+        event_times:   @current_example.event_times
       })
     end
 
@@ -48,7 +54,7 @@ module RspecProfiling
 
     private
 
-    attr_reader :collector, :vcs
+    attr_reader :collector, :vcs, :events
 
     def start_counting_queries
       ActiveSupport::Notifications.subscribe("sql.active_record") do |name, start, finish, id, query|
@@ -59,6 +65,14 @@ module RspecProfiling
     def start_counting_requests
       ActiveSupport::Notifications.subscribe("process_action.action_controller") do |name, start, finish, id, request|
         @current_example.try(:log_request, request, start, finish)
+      end
+    end
+
+    def start_counting_events
+      events.each do |event|
+        ActiveSupport::Notifications.subscribe(event) do |extra, start, finish, id, request|
+          @current_example.try(:log_event, event, start, finish)
+        end
       end
     end
   end

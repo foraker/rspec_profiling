@@ -7,7 +7,8 @@ module RspecProfiling
     @config ||= OpenStruct.new({
       collector:  RspecProfiling::Collectors::SQL,
       vcs:        RspecProfiling::VCS::Git,
-      table_name: 'spec_profiling_results'
+      table_name: 'spec_profiling_results',
+      events:     []
     })
   end
 end

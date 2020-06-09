@@ -61,13 +61,13 @@ module RspecProfiling
 
       def event_headers
         config.events.flat_map do |event|
-          ["#{event}_count", "#{event}_time"]
+          ["#{event}_count", "#{event}_time", "#{event}_events"]
         end
       end
 
       def event_cells(attributes)
         config.events.flat_map do |event|
-          [attributes[:event_counts][event], attributes[:event_times][event]]
+          [attributes[:event_counts][event], attributes[:event_times][event], attributes[:event_events][event]]
         end
       end
     end

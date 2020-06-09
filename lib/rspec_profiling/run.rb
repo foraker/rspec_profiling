@@ -45,7 +45,8 @@ module RspecProfiling
         request_time:  @current_example.request_time,
         events:        @events,
         event_counts:  @current_example.event_counts,
-        event_times:   @current_example.event_times
+        event_times:   @current_example.event_times,
+        event_events:   @current_example.event_events
       })
     end
 
@@ -69,9 +70,9 @@ module RspecProfiling
     end
 
     def start_counting_events
-      events.each do |event|
-        ActiveSupport::Notifications.subscribe(event) do |extra, start, finish, id, request|
-          @current_example.try(:log_event, event, start, finish)
+      events.each do |event_name|
+        ActiveSupport::Notifications.subscribe(event_name) do |name, start, finish, id, event|
+          @current_example.try(:log_event, event_name, event, start, finish)
         end
       end
     end

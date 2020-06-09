@@ -1,3 +1,4 @@
+require "active_support"
 require "active_support/core_ext"
 require "rspec_profiling/run"
 require "time"
@@ -18,7 +19,7 @@ module RspecProfiling
     end
 
     def simulate_event(name)
-      ActiveSupport::Notifications.instrument(name, name, 100, 150, 3, {})
+      ActiveSupport::Notifications.instrument(name, name, 100, 150, 3, {name: 'custom', data: {key: 'value'}})
     end
 
     describe "#run_example" do
@@ -30,7 +31,8 @@ module RspecProfiling
         ExampleDouble.new({
           file_path: "/something_spec.rb",
           line_number: 15,
-          full_description: "should do something"
+          full_description: "should do something",
+          record_events: %w[custom]
         })
       end
 
@@ -100,6 +102,10 @@ module RspecProfiling
 
       it "records the custom event time" do
         expect(result.event_times["custom"]).to eq 50
+      end
+
+      it "records the custom event events" do
+        expect(result.event_events["custom"]).to eq [{"data"=>{"key"=>"value"}, "name"=>"custom"}]
       end
     end
 

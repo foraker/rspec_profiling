@@ -84,6 +84,21 @@ end
 
 Note that custom events are only currenly reported by the CSV collector.
 
+#### Custom Event Recording
+
+It is possible to record the event metadata for a spec.
+
+```Ruby
+  describe 'Records all active record queries', record_events: %w[sql.active_record] do
+    it 'Records Rails deprecations', record_events: %w[deprecation.rails] do
+      ...
+    end
+    it 'Records nothing' do
+      ...
+    end
+  end
+```
+
 ### Choose a results collector
 
 Results are collected just by running the specs.

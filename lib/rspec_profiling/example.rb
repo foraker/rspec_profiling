@@ -23,6 +23,7 @@ module RspecProfiling
       @counts  = Hash.new(0)
       @event_counts = Hash.new(0)
       @event_times = Hash.new(0)
+      @event_events = Hash.new()
     end
 
     def file
@@ -65,7 +66,7 @@ module RspecProfiling
       counts[:request_time]
     end
 
-    attr_reader :event_counts, :event_times
+    attr_reader :event_counts, :event_times, :event_events
 
     def log_query(query, start, finish)
       unless query[:sql] =~ IGNORED_QUERIES_PATTERN
@@ -79,9 +80,16 @@ module RspecProfiling
       counts[:request_time] += request[:view_runtime].to_f
     end
 
-    def log_event(name, start, finish)
-      event_counts[name] += 1
-      event_times[name] += (finish - start)
+    def log_event(event_name, event, start, finish)
+      event_counts[event_name] += 1
+      event_times[event_name] += (finish - start)
+      if verbose_record_event?(event_name)
+        begin
+          ((event_events[event_name] ||= []) << event.as_json)
+        rescue => e
+          # no op
+        end
+      end
     end
 
     private
@@ -98,6 +106,10 @@ module RspecProfiling
 
     def metadata
       example.metadata
+    end
+
+    def verbose_record_event?(event_name)
+      metadata[:record_events].to_a.include?(event_name)
     end
   end
 end

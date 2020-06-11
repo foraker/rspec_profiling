@@ -67,7 +67,7 @@ module RspecProfiling
 
       def event_cells(attributes)
         config.events.flat_map do |event|
-          [attributes[:event_counts][event], attributes[:event_times][event], attributes[:event_events][event]]
+          [attributes[:event_counts][event], attributes[:event_times][event], attributes[:event_events][event].to_json]
         end
       end
     end

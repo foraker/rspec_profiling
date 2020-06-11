@@ -83,9 +83,10 @@ module RspecProfiling
     def log_event(event_name, event, start, finish)
       event_counts[event_name] += 1
       event_times[event_name] += (finish - start)
+      event_events[event_name] ||= []
       if verbose_record_event?(event_name)
         begin
-          ((event_events[event_name] ||= []) << event.as_json)
+          event_events[event_name] << event.as_json
         rescue => e
           # no op
         end

@@ -12,7 +12,7 @@ module RspecProfiling
       end
 
       def time
-        Time.parse `git show -s --format=%ci #{sha}`
+        Time.parse `git show -s --format=%ci #{sha}`.strip
       end
     end
   end

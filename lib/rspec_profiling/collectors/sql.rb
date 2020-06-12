@@ -47,7 +47,7 @@ module RspecProfiling
       end
 
       def insert(attributes)
-        results.create!(attributes.except(:created_at))
+        results.create!(attributes.except(:created_at, :events, :event_counts, :event_times, :event_events))
       end
 
       def results

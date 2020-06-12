@@ -44,6 +44,13 @@ which results will be collected.
 bundle exec rake rspec_profiling:install
 ```
 
+If you are planning on using `sqlite` or `pg` ensure to add the depency to your gemfile
+
+```
+  gem 'sqlite', require: false
+  gem 'pg', require: false
+```
+
 ## Usage
 
 ### Choose a version control system
@@ -105,8 +112,15 @@ Results are collected just by running the specs.
 
 #### SQLite3
 
-By default, profiles are collected in an SQL database. Make sure you've
-run the installation rake task before attempting.
+Make sure you've run the installation rake task before attempting.
+
+You can configure `RspecProfiling` to collect results in a SQL database in `config/initializers/rspec_profiling.rb`:
+
+```Ruby
+RspecProfiling.configure do |config|
+  config.collector = RspecProfiling::Collectors::SQL
+end
+```
 
 You can review results by running the RspecProfiling console.
 The console has a preloaded `results` variable.
@@ -137,7 +151,7 @@ debugging, such as `exception` and `status`.
 
 #### CSV
 
-You can configure `RspecProfiling` to collect results in a CSV in `config/initializers/rspec_profiling.rb`:
+By default, profiles are collected in an a CSV file. You can configure `RspecProfiling` to collect results in a CSV in `config/initializers/rspec_profiling.rb`:
 
 ```Ruby
 RspecProfiling.configure do |config|

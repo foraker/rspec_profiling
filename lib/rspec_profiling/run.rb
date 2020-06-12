@@ -2,8 +2,6 @@ require "rspec_profiling/example"
 require "rspec_profiling/vcs/git"
 require "rspec_profiling/vcs/svn"
 require "rspec_profiling/vcs/git_svn"
-require "rspec_profiling/collectors/sql"
-require "rspec_profiling/collectors/psql"
 require "rspec_profiling/collectors/csv"
 
 module RspecProfiling

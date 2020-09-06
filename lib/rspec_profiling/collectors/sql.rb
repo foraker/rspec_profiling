@@ -25,19 +25,19 @@ module RspecProfiling
         return if prepared?
 
         connection.create_table(table) do |t|
-          t.string    :branch
-          t.string    :commit_hash
-          t.datetime  :date
-          t.text      :file
-          t.integer   :line_number
+          t.string    :branch, index: true
+          t.string    :commit_hash, index: true
+          t.datetime  :date, index: true
+          t.text      :file, index: true
+          t.integer   :line_number, index: true
           t.text      :description
-          t.decimal   :time
-          t.string    :status
+          t.decimal   :time, index: true
+          t.string    :status, index: true
           t.text      :exception
-          t.integer   :query_count
-          t.decimal   :query_time
-          t.integer   :request_count
-          t.decimal   :request_time
+          t.integer   :query_count, index: true
+          t.decimal   :query_time, index:true
+          t.integer   :request_count, index: true
+          t.decimal   :request_time, index: true
           t.timestamps null: true
         end
       end

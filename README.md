@@ -169,7 +169,7 @@ require 'rspec_profiling'
 require 'rspec_profiling/console'
 ```
 
-Then `results` will be available as a variable to the script. 
+Then `results` will be available as a variable to the script.
 
 ## Uninstalling
 
@@ -183,10 +183,10 @@ To remove the results database, run `bundle exec rake rspec_profiling:uninstall`
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-## About Foraker Labs
+## About Breakwater
 
-![Foraker Logo](http://assets.foraker.com/attribution_logo.png)
+![Breakwater Logo](https://images.squarespace-cdn.com/content/5d084fe43b0b620001239437/1565926359217-2LQ1BOFAO5846OAYAGZV/breakwater.png?content-type=image%2Fpng)
 
-Foraker Labs builds exciting web and mobile apps in Boulder, CO. Our work powers a wide variety of businesses with many different needs. We love open source software, and we're proud to contribute where we can. Interested to learn more? [Contact us today](https://www.foraker.com/contact-us).
+Breakwater builds exciting web and mobile apps in Louisville, CO. Our work powers a wide variety of businesses with many different needs. We love open source software, and we're proud to contribute where we can. Interested to learn more? [Contact us today](https://www.breakwaterltd.com/contact).
 
-This project is maintained by Foraker Labs. The names and logos of Foraker Labs are fully owned and copyright Foraker Design, LLC.
+This project is maintained by Breakwater. The names and logos of Breakwater are fully owned and copyright Breakwater Limited.

@@ -1,9 +1,7 @@
-require "csv"
-
 module RspecProfiling
   module Collectors
-    class CSV
-      HEADERS = %w{
+    class JSON
+      KEYS = %w{
         branch
         commit_hash
         seed
@@ -35,13 +33,13 @@ module RspecProfiling
       end
 
       def initialize(config=RspecProfiling.config)
-        config.csv_path ||= 'tmp/spec_benchmarks.csv'
+        config.output_file_path ||= 'tmp/spec_benchmarks.json'
 
         @config = config
       end
 
       def insert(attributes)
-        output << static_cells(attributes) + event_cells(attributes)
+        output << merge_attributes_and_events(attributes) + "\n"
       end
 
       private
@@ -49,29 +47,21 @@ module RspecProfiling
       attr_reader :config
 
       def output
-        @output ||= ::CSV.open(path, "w").tap { |csv| csv << HEADERS + event_headers }
+        @output ||= ::File.open(path, "w")
       end
 
       def path
-        config.csv_path.call
+        config.output_file_path.call
       end
 
-      def static_cells(attributes)
-        HEADERS.map do |field|
-          attributes.fetch(field.to_sym)
-        end
-      end
-
-      def event_headers
+      def merge_attributes_and_events(attributes)
         config.events.flat_map do |event|
-          ["#{event}_count", "#{event}_time", "#{event}_events"]
+          attributes["#{event}_counts"] = attributes[:event_counts][event]
+          attributes["#{event}_times"] = attributes[:event_times][event]
+          attributes["#{event}_events"] = attributes[:event_events][event]
         end
-      end
 
-      def event_cells(attributes)
-        config.events.flat_map do |event|
-          [attributes[:event_counts][event], attributes[:event_times][event], attributes[:event_events][event].to_json]
-        end
+        attributes.except(:event_counts, :event_times, :event_events, :events).to_json
       end
     end
   end

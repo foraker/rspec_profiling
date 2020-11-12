@@ -1,8 +1,10 @@
+require "get_process_mem"
 require "rspec_profiling/example"
 require "rspec_profiling/vcs/git"
 require "rspec_profiling/vcs/svn"
 require "rspec_profiling/vcs/git_svn"
 require "rspec_profiling/collectors/csv"
+require "rspec_profiling/collectors/json"
 
 module RspecProfiling
   class Run
@@ -13,6 +15,7 @@ module RspecProfiling
       @collector = collector
       @vcs       = vcs
       @events    = events
+      @seed      = RSpec.configuration.seed
     end
 
     def start(*args)
@@ -22,6 +25,7 @@ module RspecProfiling
     end
 
     def example_started(example)
+      start_recording_memory
       example = example.example if example.respond_to?(:example)
       @current_example = Example.new(example)
     end
@@ -30,6 +34,7 @@ module RspecProfiling
       collector.insert({
         branch:        vcs.branch,
         commit_hash:   vcs.sha,
+        seed:          @seed,
         date:          vcs.time,
         file:          @current_example.file,
         line_number:   @current_example.line_number,
@@ -44,7 +49,9 @@ module RspecProfiling
         events:        @events,
         event_counts:  @current_example.event_counts,
         event_times:   @current_example.event_times,
-        event_events:   @current_example.event_events
+        event_events:  @current_example.event_events,
+        start_memory:  @start_memory,
+        end_memory:    end_memory
       })
     end
 
@@ -53,7 +60,15 @@ module RspecProfiling
 
     private
 
-    attr_reader :collector, :vcs, :events
+    attr_reader :collector, :vcs, :events, :seed, :start_memory
+
+    def end_memory
+      GetProcessMem.new.mb
+    end
+
+    def start_recording_memory
+      @start_memory = GetProcessMem.new.mb
+    end
 
     def start_counting_queries
       ActiveSupport::Notifications.subscribe("sql.active_record") do |name, start, finish, id, query|

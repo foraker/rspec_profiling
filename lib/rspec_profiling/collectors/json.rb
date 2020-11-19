@@ -61,7 +61,7 @@ module RspecProfiling
           attributes["#{event}_events"] = attributes[:event_events][event]
         end
 
-        attributes.merge(config.additional_data)
+        attributes.merge!(config.additional_data)
 
         attributes.except(:event_counts, :event_times, :event_events, :events).to_json
       end

@@ -1,3 +1,10 @@
+> [!IMPORTANT]  
+> This repo is no longer maintained. Find the current version at https://github.com/procore-oss/rspec_profiling
+
+Original README is below.
+
+---
+
 # RspecProfiling
 
 Collects profiles of RSpec test suites, enabling you to identify specs
